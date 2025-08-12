@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Modern Portfolio — Your Name</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#081026;
+      --card:#0f1724cc;
+      --glass: rgba(255,255,255,0.06);
+      --accent1:#7c3aed; /* violet */
+      --accent2:#06b6d4; /* cyan */
+      --muted:#9aa6bf;
+      --glass-border: rgba(255,255,255,0.06);
+      --max-width:1100px;
+      color-scheme: dark;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.12), transparent 8%),
+                  radial-gradient(900px 400px at 90% 90%, rgba(6,182,212,0.08), transparent 10%),
+                  linear-gradient(180deg,#06111f 0%, #071226 100%);
+      color:#e6eef8; -webkit-font-smoothing:antialiased;
+      padding:48px 20px;
+      display:flex; justify-content:center;
+    }
+    .container{width:100%;max-width:var(--max-width)}
+
+    header{
+      display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;
+    }
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{
+      width:52px;height:52px;border-radius:12px;display:grid;place-items:center;font-weight:800;
+      background:linear-gradient(135deg,var(--accent1),var(--accent2));box-shadow:0 6px 20px rgba(6,182,212,0.06);
+    }
+    nav{display:flex;gap:18px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:14px}
+    nav a:hover{color:#fff}
+
+    .hero{
+      display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:center;margin-bottom:36px;
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:16px;padding:28px;border:1px solid var(--glass-border);backdrop-filter: blur(8px);
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+    }
+    .intro h1{font-family:'Space Grotesk', Inter, sans-serif;font-size:38px;margin:0 0 8px}
+    .intro p{color:var(--muted);margin:0 0 18px;line-height:1.5}
+    .cta{display:flex;gap:12px}
+    .btn{padding:10px 16px;border-radius:12px;border:none;cursor:pointer;font-weight:700}
+    .btn-primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#051026}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    .profile-card{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
+    .avatar{width:120px;height:120px;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,0.06)}
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+    .pill{background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:999px;font-size:13px;color:var(--muted)}
+
+    /* Projects */
+    .projects{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:28px}
+    .proj{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid var(--glass-border)}
+    .proj h3{margin:0 0 6px;font-size:16px}
+    .proj p{margin:0 0 10px;color:var(--muted);font-size:14px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{font-size:12px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--muted)}
+
+    /* Skills */
+    .skills{display:flex;gap:14px;flex-direction:column}
+    .skill{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .skill .bar{flex:1;height:10px;border-radius:999px;background:rgba(255,255,255,0.03);overflow:hidden;margin-left:12px}
+    .skill .fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent2),var(--accent1));width:60%}
+
+    /* Timeline */
+    .timeline{display:flex;flex-direction:column;gap:12px}
+    .timeline-item{display:flex;gap:12px;align-items:flex-start}
+    .dot{min-width:12px;min-height:12px;border-radius:50%;background:linear-gradient(180deg,var(--accent1),var(--accent2));margin-top:6px}
+    .timeline-item p{margin:0;color:var(--muted)}
+
+    footer{display:flex;justify-content:space-between;align-items:center;padding-top:18px;border-top:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .projects{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:640px){
+      nav{display:none}
+      .projects{grid-template-columns:1fr}
+      body{padding:20px}
+      .intro h1{font-size:28px}
+    }
+
+    /* micro animations */
+    .floating{animation:floating 6s ease-in-out infinite}
+    @keyframes floating{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+
+    .glow{position:relative}
+    .glow::after{content:'';position:absolute;inset:-2px;border-radius:inherit;z-index:-1;background:linear-gradient(120deg,rgba(124,58,237,0.12),rgba(6,182,212,0.08));filter:blur(18px);opacity:0;transition:opacity .3s}
+    .glow:hover::after{opacity:1}
+
+    /* subtle entrance */
+    .reveal{opacity:0;transform:translateY(8px);animation:reveal .6s forwards;animation-delay:.15s}
+    @keyframes reveal{to{opacity:1;transform:none}}
+
+    /* decorative wave */
+    .wave{width:100%;height:56px;display:block}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">NR</div>
+        <div>
+          <div style="font-weight:700">Nandan Rathod</div>
+          <div style="font-size:12px;color:var(--muted)">Aspiring Software Engineer | Web Developer</div>
+        </div>
+      </div>
+      <nav aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="card intro reveal">
+          <h1>Hi, I’m <span style="background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent">Nandan Rathod</span><br><span style="font-size:16px;color:var(--muted);font-weight:600">I build modern web experiences</span></h1>
+          <p>Design-minded frontend engineer focusing on fast, accessible and beautiful web apps. I turn product ideas into the modern web app.</p>
+          <div class="cta">
+            <button class="btn btn-primary"><a href="https://drive.google.com/file/d/1MPAKpHyA1QMiBtl3fy7DXBwPAzGei4eu/view?usp=drive_link" download class="btn btn-primary">Download CV</a></button>
+            <a href="#projects" class="btn btn-ghost" style="display:inline-flex;align-items:center;gap:8px">See projects →</a>
+          </div>
+
+          <div style="margin-top:18px;display:flex;gap:12px;align-items:center">
+            <div style="font-size:12px;color:var(--muted)">Available for:</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <div class="pill">Full-time</div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="card profile-card floating glow reveal" style="align-self:start">
+          <div class="avatar"><img src="https://i.ibb.co/BH99426R/Photo.jpg" alt="Photo" border="0"></a> alt="Photo" border="0"></a> alt="Your avatar"></div>
+          <div style="font-weight:700">Nandan Rathod</div>
+          <div style="font-size:13px;color:var(--muted)">Frontend and Python Developer • Bangalore, India</div>
+          <div class="pills">
+            <div class="pill">C</div>
+            <div class="pill">C++</div>
+            <div class="pill">HTML</div>
+            <div class="pill">CSS</div>
+            <div class="pill">JavaScript</div>
+            <div class="pill">Python</div>
+            <div class="pill">TypeScript</div>
+          </div>
+
+          <div style="width:100%;margin-top:12px;display:flex;gap:8px;justify-content:center">
+            <a class="btn btn-ghost" href="#contact">Hire me</a>
+            <a class="btn" href="#contact" style="background:transparent;border:1px solid var(--glass-border);">Follow</a>
+          </div>
+        </aside>
+      </section>
+
+      <section id="projects" style="margin-bottom:20px">
+        <h2 style="margin:0 0 12px;font-size:20px">Projects</h2>
+        <div class="projects">
+          <article class="proj reveal">
+            <h3>Mental Health chatbot</h3>
+            <p>Developed an AI-based chatbot using Python and NLP to provide mental health support and emotional wellness tips.</p>
+            <p>Utilized machine learning algorithms to analyze user input and deliver personalized responses.</p>
+            <p>Integrated with a web interface using Flask for easy access and interaction.</p>
+            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Python</span><span class="tag">NLP</span></div>
+          </article>
+
+          <article class="proj reveal">
+            <h3>Cafeteria Food Ordering System</h3>
+            <p>Developed a digital ordering system for a cafeteria to streamline food ordering and reduce wait times.</p>
+            <p>Implemented features such as menu browsing, order customization, and real-time order tracking.</p>
+            <p>Integrated payment processing using Stripe API for secure transactions.</p>
+            <p>Deployed the application on Vercel for easy scaling and management.</p>
+            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Python</span><span class="tag">PHP</span><span class="tag">NoSQL</span></div>
+          </article>
+
+          <article class="proj reveal">
+            <h3>Drowsiness_Detection</h3>
+            <p>Developed a real-time drowsiness detection system using computer vision and machine learning techniques.</p>
+            <p>Implemented a robust pipeline for face detection, eye tracking, and drowsiness classification.</p>
+            <p>Utilized OpenCV and TensorFlow for image processing and model training.</p>
+            <p>Deployed the system on a Raspberry Pi for real-time monitoring.</p>
+            <p>Created a user-friendly interface for monitoring drowsiness levels.</p>
+            <div class="tags"><span class="tag">OpenCV</span><span class="tag">TensorFlow</span><span class="tag">Raspberry Pi</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="skills" style="margin-bottom:20px;display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start">
+        <div class="card skills reveal">
+          <h2 style="margin-top:0">Skills & Tools</h2>
+          <div class="skill"><div style="font-weight:700">C</div><div class="bar"><div class="fill" style="width:75%"></div></div></div>
+          <div style="height:8px"></div>
+          <div class="skill"><div style="font-weight:700">C++</div><div class="bar"><div class="fill" style="width:75%"></div></div></div>
+          <div style="height:8px"></div>
+          <div class="skill"><div style="font-weight:700">Python</div><div class="bar"><div class="fill" style="width:75%"></div></div></div>
+          <div style="height:8px"></div>
+          <div class="skill"><div style="font-weight:700">HTML</div><div class="bar"><div class="fill" style="width:90%"></div></div></div>
+          <div style="height:8px"></div>
+          <div class="skill"><div style="font-weight:700">CSS</div><div class="bar"><div class="fill" style="width:88%"></div></div></div>
+          <div style="height:8px"></div>
+          <div class="skill"><div style="font-weight:700">JavaScript</div><div class="bar"><div class="fill" style="width:80%"></div></div></div>
+          <div style="height:8px"></div>
+          <div class="skill"><div style="font-weight:700">React JS</div><div class="bar"><div class="fill" style="width:75%"></div></div></div>
+          <div style="height:8px"></div>
+          <div class="skill"><div style="font-weight:700">Databases(MySQL, MongoDB)</div><div class="bar"><div class="fill" style="width:70%"></div></div></div>
+        </div>
+
+        <aside class="card timeline reveal">
+          <h3 style="margin-top:0">Experience</h3>
+          <div class="timeline-item"><div class="dot"></div><div><strong>2025 – Present</strong><div style="font-weight:700">Frontend Developer</div><p>Building design systems and feature-rich web apps.</p></div></div>
+          <div class="timeline-item"><div class="dot"></div><div><strong>2024 – 2025</strong><div style="font-weight:700">Python Developer</div><p>Worked on some basic backend services and APIs.</p></div></div>
+          <div class="timeline-item"><div class="dot"></div><div><strong>2022 – 2024</strong><div style="font-weight:700">C, C++,Java</div><p>Learning programming languages and building small projects.</p></div></div>
+        </aside>
+      </section>
+
+      <section id="contact" class="card reveal">
+        <h2 style="margin-top:0">Contact</h2>
+        <p>If you’d like to get in touch, feel free to reach out via email or connect with me on social media.</p>
+        <div style="margin-top:12px">
+         <p>Email: <a href="mailto:nandan07381@gmail.com" style="color: cyan;">nandan07381@gmail.com</a></p>
+          <p>LinkedIn: <a href="https://www.linkedin.com/in/nandan-rathod-2b8332265/" style="color: cyan;">Profile</a></p>
+          <p>GitHub: <a href="https://github.com/nandanrathodrnr" style="color: cyan;">Profile</a></p>
+          <p>Portfolio: <a href="#" style="color: cyan;">My Portfolio</a></p>
+    </section>
+
+    <section id="contact" class="card reveal">
+        <h2 style="margin-top:0">Achievements and Certifications</h2>
+         <ul>
+                <li>Internship on Python Programming by EZTS Technologies</li>
+                <li>Participated certificate – InduriAI  24hours hackathon in IIT Madras.</li>
+                <li>Certificate of Appreciation for organizing Chakravyuha, a state-level technical fest</li>
+                <li>Led a team to top 25 in National Entrepreneurship Challenge, IIT Bombay</li>
+            </ul>
+    </section>
+
+     <section id="contact" class="card reveal">
+        <h2 style="margin-top:0">Contact Me</h2>
+        <p style="color:var(--muted);margin-top:0">Interested in working together? Send a message — I usually reply within a few days.</p>
+       <form id="contactForm" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+  <input name="name" required placeholder="Your name" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
+  <input name="email" type="email" required placeholder="Email" style="padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
+  <input name="subject" placeholder="Subject" style="grid-column:1/3;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit" />
+  <textarea name="message" placeholder="Message" rows="5" style="grid-column:1/3;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit"></textarea>
+  <div style="grid-column:1/3;display:flex;justify-content:space-between;align-items:center">
+    <div style="font-size:13px;color:var(--muted)">Or reach me at <strong style="color:#fff"><a href="mailto:nandan07381@gmail.com">nandan07381@gmail.com</a></strong></div>
+    <button class="btn btn-primary" type="submit">Send message</button>
+  </div>
+  </form>
+
+      </section>
+    </main>
+
+    <footer>
+      <div>© <strong>Nandan Rathod</strong></div>
+     <div style="display:flex;gap:12px">
+  <a href="https://twitter.com/nandanrathodrnr" target="_blank" style="color:var(--muted);text-decoration:none;font-size:13px">Twitter</a>
+  <a href="https://github.com/nandanrathodrnr" target="_blank" style="color:var(--muted);text-decoration:none;font-size:13px">GitHub</a>
+</div>
+
+    </footer>
+
+    
+    <!-- decorative wave -->
+    <svg class="wave" viewBox="0 0 1200 56" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 40 C150 10 350 70 600 40 C850 10 1050 70 1200 40 L1200 60 L0 60 Z" fill="rgba(255,255,255,0.02)"></path>
+    </svg>
+  </div>
+
+  <script>
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // stop default form submit
+    fetch("https://formspree.io/f/mnnzwjee", {
+        method: "POST",
+        body: new FormData(this),
+        headers: { 'Accept': 'application/json' }
+    }).then(response => {
+        if (response.ok) {
+            alert("✅ Message Submitted!");
+            this.reset(); // clear form
+        } else {
+            alert("❌ Something went wrong. Please try again.");
+        }
+    }).catch(() => alert("❌ Network error. Please try again."));
+});
+</script>
+</body>
+</html>
